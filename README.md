@@ -87,12 +87,23 @@ adb devices
 
 
 ### Запуск тестов: 
-Для запуска тестов на iPhone использовать команду ниже:
+a) Для запуска тесто по умолчанию используем команду:
 ```shell
-gradlew clean test -Denv=iPhone14ProMax
+gradlew clean test
+```
+в этом случае дефолтное значение deviceHost=browserstack
+
+b) Для запуска тестов на реальном устройстве используем команду:
+```shell
+gradlew clean test -DdeviceHost=real
 ```
 
-Для запуска тестов на Android использовать команду ниже:
+c) Для запуска тестов на виртуальном устройстве используем команду:
 ```shell
-gradlew clean test -Denv=samsungGalaxyS22Ultra
+gradlew clean test -Denv=emulation
+```
+
+d) Для запуска тестов удаленно на BrowserStack используем команду:
+```shell
+gradlew clean test -Denv=browserstack
 ```
