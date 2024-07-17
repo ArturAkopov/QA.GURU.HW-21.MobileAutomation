@@ -5,8 +5,7 @@ import org.aeonbits.owner.Config;
 @Config.LoadPolicy(Config.LoadType.FIRST)
 @Config.Sources({
         "classpath:${deviceHost}.properties",
-//        "classpath:browserstack.properties"
-        "classpath:real.properties"
+        "classpath:browserstack.properties"
 })
 public interface MobileConfig extends Config {
 
@@ -16,7 +15,7 @@ public interface MobileConfig extends Config {
 
     String mobileApp();
 
-    String mobileDevice();
+    String deviceName();
 
     String mobilePlatform();
 
@@ -27,6 +26,8 @@ public interface MobileConfig extends Config {
     String mobileName();
 
     String mobileUrl();
+
+    String remoteUrl();
 
     String appPackage();
 
