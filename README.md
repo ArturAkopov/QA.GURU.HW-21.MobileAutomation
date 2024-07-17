@@ -2,7 +2,7 @@
 ## Домашнее задание №21
 
 
-### Настроить рабочий стол:   
+### 1. Настроить рабочий стол:   
 Вариант 1:   
 https://autotest.how/appium-setup-for-local-android-tutorial-md   
 
@@ -57,7 +57,15 @@ npm install -g appium
 ```shell
 appium server --base-path /wd/hub
 ```
-  
+### 2. Открыть Appium Inspector, подключиться к эмулятору
+
+- Изучить функционал Appium Inspector, попробовать найти локатор
+
+### 3. Разработать автотест на getting started (onboarding screen) в приложении википедии - пройти по 4м экранам, на каждом сделать проверку
+
+### 4. Доработать возможность запуска на разных стендах (передать из командной строки -DdeviceHost=browserstack / emulation / real
+
+### 5. Для каждого сделать драйвер и конфиг с owner
 
 
 
