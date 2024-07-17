@@ -57,8 +57,25 @@ npm install -g appium
 ```shell
 appium server --base-path /wd/hub
 ```
-### 2. Открыть Appium Inspector, подключиться к эмулятору
-
+### 2. Открыть Appium Inspector
+**Подключить локальное устройство:**   
+Для определения серийного номера устройства
+```shell
+cd C:\Users\{User}\AppData\Local\Android\Sdk\platform-tools
+```
+Затем ввести команду и найти serial_number устройства
+```shell
+adb devices
+```
+В Appium Inspector в теле сессии ввести:
+```shell
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "{serial_number}"
+}
+```
+**Для подключения к эмуляции ввести данные от виртуального устройства**
 - Изучить функционал Appium Inspector, попробовать найти локатор
 
 ### 3. Разработать автотест на getting started (onboarding screen) в приложении википедии - пройти по 4м экранам, на каждом сделать проверку
