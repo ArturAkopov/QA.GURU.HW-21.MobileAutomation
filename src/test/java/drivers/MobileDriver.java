@@ -36,19 +36,35 @@ public class MobileDriver implements WebDriverProvider {
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
-        if (config.isDevice().equals("browserStack")) {
-            return getBrowserStackDriver();
+        if (config.isDevice().equals("emulate")) {
+            return getEmulateDriver();
+        } else if (config.isDevice().equals("real")) {
+            return getRealDriver();
         }
-        return getMobileDriver();
+        return getBrowserStackDriver();
     }
 
 
-    public AndroidDriver getMobileDriver() {
+    public AndroidDriver getRealDriver() {
         UiAutomator2Options options = new UiAutomator2Options();
 
         options.setAutomationName(ANDROID_UIAUTOMATOR2)
                 .setPlatformName(ANDROID)
-                .setDeviceName(config.mobileDevice())
+                .setDeviceName(config.deviceName())
+                .setApp(getAppPath())
+                .setAppPackage(config.appPackage())
+                .setAppActivity(config.appActivity());
+
+        return new AndroidDriver(getAppiumServerUrl(), options);
+    }
+
+    public AndroidDriver getEmulateDriver() {
+        UiAutomator2Options options = new UiAutomator2Options();
+
+        options.setAutomationName(ANDROID_UIAUTOMATOR2)
+                .setPlatformName(ANDROID)
+                .setPlatformVersion(config.mobilePlatform())
+                .setDeviceName(config.deviceName())
                 .setApp(getAppPath())
                 .setAppPackage(config.appPackage())
                 .setAppActivity(config.appActivity());
@@ -87,15 +103,17 @@ public class MobileDriver implements WebDriverProvider {
         caps.setCapability("browserstack.user", config.mobileUser());
         caps.setCapability("browserstack.key", config.mobilePass());
         caps.setCapability("app", config.mobileApp());
-        caps.setCapability("device", config.mobileDevice());
+        caps.setCapability("device", config.deviceName());
         caps.setCapability("os_version", config.mobilePlatform());
         caps.setCapability("project", config.mobileProject());
         caps.setCapability("build", config.mobileBuild());
         caps.setCapability("name", config.mobileName());
+        caps.setCapability("language","ru");
+        caps.setCapability("locale","RU");
 
         try {
             return new RemoteWebDriver(
-                    new URL(config.mobileUrl()), caps);
+                    new URL(config.remoteUrl()), caps);
         } catch (
                 MalformedURLException e) {
             throw new RuntimeException(e);
