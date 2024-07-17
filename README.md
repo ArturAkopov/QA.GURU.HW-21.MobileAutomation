@@ -1,4 +1,4 @@
-# QA.GURU.HW-20.Browserstack
+# QA.GURU.HW-21.MobileAutomation
 ## Домашнее задание №21
 
 
