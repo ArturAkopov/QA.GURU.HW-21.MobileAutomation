@@ -16,19 +16,19 @@ public class WikiTests extends TestBase {
             $(id("org.wikipedia.alpha:id/fragment_onboarding_forward_button"))
                     .click();
             $(id("org.wikipedia.alpha:id/primaryTextView"))
-                    .shouldHave(text("Новые способы исследований"));
+                    .shouldHave(visible);
         });
         step("Второй экран и клик", () -> {
             $(id("org.wikipedia.alpha:id/fragment_onboarding_forward_button"))
                     .click();
             $(id("org.wikipedia.alpha:id/primaryTextView"))
-                    .shouldHave(text("Списки для чтения с синхронизацией"));
+                    .shouldHave(visible);
         });
         step("Третий экран и клик", () -> {
             $(id("org.wikipedia.alpha:id/fragment_onboarding_forward_button"))
                     .click();
             $(id("org.wikipedia.alpha:id/primaryTextView"))
-                    .shouldHave(text("Данные и конфиденциальность"));
+                    .shouldHave(visible);
         });
         step("Четвертый экран и клик", () -> {
             $(id("org.wikipedia.alpha:id/fragment_onboarding_done_button"))

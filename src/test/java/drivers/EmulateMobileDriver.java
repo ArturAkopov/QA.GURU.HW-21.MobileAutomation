@@ -1,18 +1,14 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
-
-import config.MobileConfig;
+import config.EmulateMobileConfig;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import javax.annotation.Nonnull;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,11 +20,11 @@ import static io.appium.java_client.remote.MobilePlatform.ANDROID;
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
 
 
-public class MobileDriver implements WebDriverProvider {
+public class EmulateMobileDriver implements WebDriverProvider {
 
-    private static final MobileConfig config =
+    private static final EmulateMobileConfig config =
             ConfigFactory.create(
-                    MobileConfig.class,
+                    EmulateMobileConfig.class,
                     System.getProperties()
             );
 
@@ -36,26 +32,7 @@ public class MobileDriver implements WebDriverProvider {
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
-        if (config.isDevice().equals("emulate")) {
-            return getEmulateDriver();
-        } else if (config.isDevice().equals("real")) {
-            return getRealDriver();
-        }
-        return getBrowserStackDriver();
-    }
-
-
-    public AndroidDriver getRealDriver() {
-        UiAutomator2Options options = new UiAutomator2Options();
-
-        options.setAutomationName(ANDROID_UIAUTOMATOR2)
-                .setPlatformName(ANDROID)
-                .setDeviceName(config.deviceName())
-                .setApp(getAppPath())
-                .setAppPackage(config.appPackage())
-                .setAppActivity(config.appActivity());
-
-        return new AndroidDriver(getAppiumServerUrl(), options);
+        return getEmulateDriver();
     }
 
     public AndroidDriver getEmulateDriver() {
@@ -63,7 +40,7 @@ public class MobileDriver implements WebDriverProvider {
 
         options.setAutomationName(ANDROID_UIAUTOMATOR2)
                 .setPlatformName(ANDROID)
-                .setPlatformVersion(config.mobilePlatform())
+                .setPlatformVersion(config.platformVersion())
                 .setDeviceName(config.deviceName())
                 .setApp(getAppPath())
                 .setAppPackage(config.appPackage())
@@ -97,28 +74,4 @@ public class MobileDriver implements WebDriverProvider {
         return app.getAbsolutePath();
     }
 
-    public RemoteWebDriver getBrowserStackDriver() {
-        MutableCapabilities caps = new MutableCapabilities();
-
-        caps.setCapability("browserstack.user", config.mobileUser());
-        caps.setCapability("browserstack.key", config.mobilePass());
-        caps.setCapability("app", config.mobileApp());
-        caps.setCapability("device", config.deviceName());
-        caps.setCapability("os_version", config.mobilePlatform());
-        caps.setCapability("project", config.mobileProject());
-        caps.setCapability("build", config.mobileBuild());
-        caps.setCapability("name", config.mobileName());
-        caps.setCapability("language","ru");
-        caps.setCapability("locale","RU");
-
-        try {
-            return new RemoteWebDriver(
-                    new URL(config.remoteUrl()), caps);
-        } catch (
-                MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
 }

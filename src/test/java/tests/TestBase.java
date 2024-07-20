@@ -2,7 +2,9 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import drivers.MobileDriver;
+import drivers.BrowserStackDriver;
+import drivers.EmulateMobileDriver;
+import drivers.RealMobileDriver;
 import io.qameta.allure.selenide.AllureSelenide;
 
 import org.junit.jupiter.api.AfterEach;
@@ -18,8 +20,13 @@ public class TestBase {
     @BeforeAll
     static void beforeAll() {
         Configuration.browserSize = null;
-        Configuration.browser = MobileDriver.class.getName();
-
+        if (System.getProperty("deviceHost", "browserstack").equals("real")) {
+            Configuration.browser = RealMobileDriver.class.getName();
+        } else if (System.getProperty("deviceHost", "browserstack").equals("emulation")) {
+            Configuration.browser = EmulateMobileDriver.class.getName();
+        } else if (System.getProperty("deviceHost", "browserstack").equals("browserstack")) {
+            Configuration.browser = BrowserStackDriver.class.getName();
+        }
     }
 
     @BeforeEach
