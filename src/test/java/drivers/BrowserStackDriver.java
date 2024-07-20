@@ -39,6 +39,7 @@ public class BrowserStackDriver implements WebDriverProvider {
         caps.setCapability("browserstack.user", authConfig.user());
         caps.setCapability("browserstack.key", authConfig.pass());
         caps.setCapability("app", config.browserstackMobileApp());
+        caps.setCapability("platformName", "android");
         caps.setCapability("device", config.browserstackDeviceName());
         caps.setCapability("os_version", config.browserstackOsVersion());
         caps.setCapability("project", config.browserstackProject());
@@ -55,5 +56,4 @@ public class BrowserStackDriver implements WebDriverProvider {
             throw new RuntimeException(e);
         }
     }
-
 }
